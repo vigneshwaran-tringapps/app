@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+
+import axios from 'axios'
+import { useEffect,useState } from 'react';
 import './App.css';
+import InputField from './components/inputfield/input';
 
 function App() {
+  
+  const [currencyOptions, setCurrencyOptions] = useState([])
+  const [fromCurrency, setFromCurrency] = useState()
+  const [toCurrency, setToCurrency] = useState()
+  const [exchangeRate, setExchangeRate] = useState()
+  const [amount, setAmount] = useState(1)
+  const [amountInFromCurrency, setAmountInFromCurrency] = useState(true)
+
+  const api = async ()=>{
+    axios.get('http://localhost:8000/api/rates')
+    .then(res =>{
+      const firstCurrency = Object.keys(res.data[0].rate)[0]
+      setCurrencyOptions([...Object.keys(res.data[0].rate)])
+      setFromCurrency(res.data[0].base)
+      setToCurrency(firstCurrency)
+      setExchangeRate((res.data[0].rate)[firstCurrency])
+      
+    })
+  }
+  useEffect(() => {
+    api()
+  }, [])
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+     <InputField 
+     className="round-input"
+     type="text"
+     placeholder="welcome there"
+     />
     </div>
   );
 }

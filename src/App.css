@@ -1,5 +1,6 @@
-.App {
+.container {
   text-align: center;
+  padding: 55px 20px;
 }
 
 .App-logo {
@@ -35,4 +36,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.round-input{
+  height: 30px;
+width: 300px;
+border: 2px solid #d3d3d3;
+border-radius: 24px;
+text-align: left;
+padding: 5px;
+}
+.round-input::placeholder{
+  padding-left: 2px;
 }
